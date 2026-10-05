@@ -8,15 +8,30 @@ public class Lab10 {
 
     public static void main(String[] args) throws Exception {
 
-        String proxyHost = "38.154.185.97";
-        int proxyPort = 6370;
+        // Allow Basic authentication for HTTPS proxy tunneling
+        System.setProperty(
+                "jdk.http.auth.tunneling.disabledSchemes",
+                ""
+        );
 
-        String username = "cxeglkys";
-        String password = "bjje1ucvalci";
+        String username = "YOUR_USERNAME";
+        String password = "YOUR_PASSWORD";
 
         Authenticator.setDefault(new Authenticator() {
+
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
+
+                System.out.println("Authentication requested");
+
+                System.out.println("Host: "
+                        + getRequestingHost());
+
+                System.out.println("Port: "
+                        + getRequestingPort());
+
+                System.out.println("Type: "
+                        + getRequestorType());
 
                 return new PasswordAuthentication(
                         username,
@@ -25,12 +40,22 @@ public class Lab10 {
             }
         });
 
+        // Webshare proxy
+        String proxyHost = "38.154.185.97";
+        int proxyPort = 6370;
+
         Proxy proxy = new Proxy(
                 Proxy.Type.HTTP,
-                new InetSocketAddress(proxyHost, proxyPort)
+                new InetSocketAddress(
+                        proxyHost,
+                        proxyPort
+                )
         );
 
-        URL url = new URL("https://ipv4.webshare.io/");
+        // Target server
+        URL url = new URL(
+                "https://ipv4.webshare.io/"
+        );
 
         HttpURLConnection connection =
                 (HttpURLConnection) url.openConnection(proxy);
@@ -38,8 +63,8 @@ public class Lab10 {
         connection.setRequestMethod("GET");
 
         System.out.println(
-                "Response Code: " +
-                        connection.getResponseCode()
+                "Response Code: "
+                        + connection.getResponseCode()
         );
 
         BufferedReader reader =
@@ -56,6 +81,7 @@ public class Lab10 {
         }
 
         reader.close();
+
         connection.disconnect();
     }
 }
