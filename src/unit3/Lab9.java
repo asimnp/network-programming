@@ -1,9 +1,6 @@
 package unit3;
 
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
-import java.net.URL;
+import java.net.*;
 
 public class Lab9 {
 
@@ -21,7 +18,7 @@ public class Lab9 {
 
                 return new PasswordAuthentication(
                         "student",
-                        "random".toCharArray()
+                        "12345".toCharArray()
                 );
             }
         });
