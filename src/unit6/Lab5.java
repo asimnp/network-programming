@@ -16,6 +16,9 @@ public class Lab5 {
             s.setReceiveBufferSize(1024 * 1024);
             s.setTrafficClass(0x10);
             s.setSoTimeout(30000);
+
+            System.out.println(s.toString());
+            System.out.println("Keep alive: " + s.getKeepAlive());
         } catch (SocketException e) {
             System.out.println(e.getMessage());
         }
